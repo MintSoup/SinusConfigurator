@@ -53,7 +53,7 @@ app.post("/set/:id", function (req, res) {
     }
 })
 
-app.get("/servers/", function (req, res) {
+app.get("/servers/:id", function (req, res) {
     if (req.query.password) {
         var hash = new SHA3(256);
         hash.update(req.query.password)
