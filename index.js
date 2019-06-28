@@ -15,13 +15,24 @@ app.use(express.static('./assets/'));
 app.use(express.urlencoded());
 
 
+app.get("/",function(req,res){
+    res.render("home")
+})
+app.get("/:id",function(req,res){
+    res.render("config",{
+        id: req.params.id
+    })
+})
+
+
+
+
 app.get('/settings/:id', function (req, res) {
     sql.run(`select * from servers where id='${req.params.id}'`, function (data) {
         try {
-            res.setHeader('Content-Type', 'application/json');
-            res.send((data[0]["settings"]))
+            res.send(JSON.parse((data[0]["settings"]))).end()
         } catch (err) {
-            res.send("invalid id")
+            res.send("invalid id").end()
         }
     })
 })

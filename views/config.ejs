@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Sinus Configurator | CONFIG </title>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
+
+  <script>
+    $(document).ready(function () {
+      $.get("/settings/"+ "<%= id %>", function (data, status) {
+
+
+        $("#color").val(data["embedcolor"]);
+        $("#prefix").val(data["prefix"]);
+        $("#rejected").val(data["rejected"]);
+
+
+
+
+        $("#modcommands_enabled").prop("checked",data["modcommands"]["enabled"])
+        $("#modcommands_body").val(data["modcommands"]["messages"]["body"]);
+        $("#modcommands_title").val(data["modcommands"]["messages"]["title"]);
+        $("#modcommands_reason").val(data["modcommands"]["messages"]["reason"]);
+        $("#modcommands_duration").val(data["modcommands"]["messages"]["duration"]);
+        $("#modcommands_usernotfound").val(data["modcommands"]["messages"]["usernotfound"]);
+        $("#modcommands_invalidduration").val(data["modcommands"]["messages"]["invalidduration"]);
+        $("#modcommands_role").val(data["modcommands"]["permissionRole"]);
+        $("#modcommands_mutedrole").val(data["modcommands"]["mutedRole"]);
+        $("#modcommands_bannedrole").val(data["modcommands"]["bannedRole"]);
+        
+
+        $("#autorole_id").val(data["autorole"]["id"]);
+        $("#autorole_enabled").prop("checked",data["autorole"]["enabled"])
+
+
+        $("#welcome_enabled").prop("checked",data["welcome"]["enabled"])
+        $("#welcome_id").val(data["welcome"]["channel"]);
+        $("#welcome_msg").val(data["welcome"]["message"]);
+
+
+        $("#purge_enabled").prop("checked",data["purge"]["enabled"])
+        $("#purge_success").val(data["purge"]["success"]);
+        $("#purge_title").val(data["purge"]["successtitle"]);
+        $("#purge_invalid").val(data["purge"]["invalidNumber"]);
+        $("#purge_role").val(data["purge"]["permissionRole"]);
+        $("#purge_max").val(data["purge"]["maxamount"]);
+
+
+        $("#logging_enabled").prop("checked",data["logging"]["enabled"])
+        $("#logging_channel").val(data["logging"]["channel"])
+
+      })
+
+
+      $("#save").click(function(){
+        data = {}
+
+
+        data["embedcolor"] = $("#color").val();
+        data["prefix"] = $("#prefix").val();
+        data["rejected"] = $("rejected").val();
+
+        modcommands = {}
+        modcommands["enabled"] = $("#modcommands_enabled").prop("checked")
+        modcommands["messages"] = {}
+        modcommands["messages"]["body"] = $("#modcommands_body")
+        modcommands["messages"]["reason"] = $("#modcommands_reason")
+        modcommands["messages"]["title"] = $("#modcommands_title")
+        modcommands["messages"]["duration"] = $("#modcommands_duration")
+        modcommands["messages"]["usernotfound"] = $("#modcommands_usernotfound")
+        modcommands["messages"]["invalidduration"] = $("#modcommands_invalidduration")
+
+
+        modcommands["permissionRole"] =  $("#modcommands_role").val();
+        modcommands["bannedRole"] =  $("#modcommands_bannedrole").val();
+        modcommands["mutedRole"] =  $("#modcommands_mutedrole").val();
+
+        data["modcommands"] = modcommands
+
+
+        data["autorole"] = {}
+        data["autorole"]["id"] = $("#autorole_id").val()
+        data["autorole"]["enabled"] = $("#autorole_enabled").prop("checked")
+
+        data["welcome"] = {}
+        data["welcome"]["enabled"] = $("#welcome_enabled").prop("checked")
+        data["welcome"]["channel"] = $("#welcome_id").val()
+        data["welcome"]["message"] = $("#welcome_msg").val()
+
+        data["purge"] = {}
+        data["purge"]["enabled"] = $("#purge_enabled").prop("checked")
+        data["purge"]["success"] = $("#purge_success").val()
+        data["purge"]["successtitle"] = $("#purge_title").val()
+        data["purge"]["invalidNumber"] = $("#purge_invalid").val()
+        data["purge"]["permissionRole"] = $("#purge_role").val()
+        data["purge"]["maxamount"] = parseInt($("#purge_max").val())
+
+      
+        data["logging"] = {}
+        data["logging"]["enabled"] = $("#logging_enabled").prop("checked")
+        data["logging"]["channel"] = $("#logging_channel").val()
+
+        var jsonstr = JSON.stringify(data)
+        var password = prompt("Please enter password (DM-ed to the server owner by the bot)")
+
+        $.post("/set/"+ "<%= id %>", {password: password, settings: jsonstr}, function (data, status) {
+          alert(data);
+        })
+
+      })
+    })
+
+
+    
+  </script>
+
+
+</head>
+
+<body>
+  <ul>
+    <li><a href="/">Home</a></li>
+  </ul>
+  <h1>Sinus Configurator</h1>
+  <h4>A customizable Moderation bot made for Discord Hack Week 2019.</h4>
+  <h4>Here you can enable/disable several functions.</h4>
+  <h4>Customize it to your own needs! Go crazy!</h4>
+
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">GENERAL</span>
+    <br>Embed color: <input type=text id=color value="ff00ff">
+    <br>Prefix: <input type=text id=prefix value=">>">
+    <br>Invalid permissions message: <input type=text id=rejected
+      value="You do not have permission to use that command.">
+
+  </div>
+
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">MODERATION</span>
+    <br>Enabled: <input type="checkbox" id="modcommands_enabled">
+    <br>Main embed body: <input type=text id=modcommands_body value="Reason: {REASON}">
+    <br>Main embed title: <input type=text id=modcommands_title value="{MEMBER} was {ACTION} by {MODERATOR}">
+    <br>Reason prompt text: <input type=text id=modcommands_reason value="Reason:">
+    <br>Duration prompt text: <input type=text id=modcommands_duration value="Duration:">
+    <br>User not found message: <input type=text id=modcommands_usernotfound
+      value="That member does not exist on this server.">
+    <br>Invalid duration message: <input type=text id=modcommands_invalidduration value="Invalid duration.">
+    <br>Moderator Role ID: <input type=text id=modcommands_role>
+    <br>Muted Role ID: <input type=text id=modcommands_mutedrole>
+    <br>Banned Role ID: <input type=text id=modcommands_bannedrole>
+  </div>
+
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">AUTOROLE</span>
+    <br>Enabled: <input type="checkbox" id="autorole_enabled">
+    <br>Autorole ID: <input type=text id=autorole_id value="0">
+
+  </div>
+
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">WELCOMING</span>
+    <br>Enabled: <input type="checkbox" id="welcome_enabled">
+    <br>Channel ID: <input type=text id=welcome_id value="0">
+    <br>Welcome message: <input type=text id=welcome_msg value="Welcome, {MEMBER}! Enjoy your stay!">
+  </div>
+
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">PURGE</span>
+    <br>Enabled: <input type="checkbox" id="purge_enabled">
+    <br>Success message: <input type=text id=purge_success value="0">
+    <br>Success embed title: <input type=text id=purge_title value="0">
+    <br>Invalid number message: <input type=text id=purge_invalid value="0">
+    <br>Permission role ID: <input type=text id=purge_role value="0">
+    <br>Maximum number of messages: <input type=text id=purge_max value="0">
+
+  </div>
+  <div class="content">
+    <span style="color: white;font-size: 32px;font-family: Arial, Helvetica, sans-serif">LOGGING</span>
+    <br>Enabled: <input type="checkbox" id="logging_enabled">
+    <br>Channel ID: <input type=text id=logging_channel value="ff00ff">
+  </div>
+
+  <button class=invite id="save" style="margin: 5px 10px 15px 10px">
+    Save
+  </button>
+
+
+  <!--<footer>
+                <h6>Sinus Project for Discord Hack Week 2019</h6>
+                <h6>Website by Freakzz#5336</h6>
+              </footer>-->
+</body>
+
+</html>

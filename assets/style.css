@@ -1,0 +1,200 @@
+/* Body */
+body {
+  background-image: url("wumpus2.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Navigation Bar */
+ul {
+  padding: 0;
+  list-style: none;
+  display: table;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  /* Links & Nav Bar */
+  display: table-cell;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 15px 0;
+  font-size: 13px;
+  float: right;
+
+}
+
+a {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+}
+
+a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+a:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+@media screen and (max-height: 300px) {
+  ul {
+    margin-top: 40px;
+  }
+}
+
+/* Buttons/Boxes */
+
+button:focus {
+  outline: 0;
+}
+
+.invite {
+  background-color: #7289da;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  top: 30%;
+  border-radius: 1px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+}
+
+.invite:hover {
+  box-shadow: 0 12px 16px 0 #5e90db3d, 0 17px 50px 0 rgba(100, 98, 247, 0.19);
+  background-color: #ffffff;
+  color: black;
+}
+
+.invite:active {
+  background-color: #767677;
+  border-radius: 10px;
+}
+
+.content {
+  padding: 10px;
+  margin: 10px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid grey;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+/* Scroll Bar */
+::-webkit-scrollbar {
+  /*width*/
+  width: 15px;
+  background-image: url("wumpus2.png");
+}
+
+::-webkit-scrollbar-track {
+  /*track*/
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  /*handle*/
+  background: rgba(22, 63, 85, 0.397);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /*handle on hover*/
+  background: rgb(22, 63, 85);
+}
+
+/*Headers & Paragraphs*/
+p {
+  /*Paragraphs*/
+  color: rgb(0, 0, 0);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  /*header num1*/
+  color: white;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: bold;
+  text-align: center;
+}
+
+h2 {
+  /*header num2*/
+  color: black;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h4 {
+  /*header num4*/
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+h6 {
+  /*header num6*/
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+/*Footer*/
+footer {
+  background-color: #7289da;
+  display: block;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+
+}
+
+/*Highlight Selector*/
+::selection {
+  background-color: #2b85ce;
+  color: #2c2f33;
+}
+
+input[type=text]{
+  border:none;
+  padding: 5px;
+  width: 50%;
+  border-radius: 3px;
+  margin: 5px;
+  background-color: #aaaaaa;
+}
